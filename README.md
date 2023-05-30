@@ -13,8 +13,8 @@ Los patrones de diseño que se implementaron en el proyecto fueron:
 A través del diagrama de clase se puede observar la implementación de los patrones de diseño previamente mencionados.
 
 - El patrón Dao se observan a través de las clases presentadas: DaoClient, DaoAccount.
-- El patrón Singleton se ve reflejado en mi clase ConectionSingleton.
-- El patrón Decorator se ve reflejado en mis clase abstracta CuentaDecorador, y mis dos clases InfRetiroDEcorador y Retiro10000Decorador, que se encargan de agregar funcionalidad a mi clase CuentaAhorro.
+- El patrón Singleton se ve reflejado en la clase ConectionSingleton.
+- El patrón Decorator se ve reflejado en la clase abstracta CuentaDecorador, y en las dos clases InfRetiroDEcorador y Retiro10000Decorador, que se encargan de agregar funcionalidad a la clase CuentaAhorro.
 
 ## Importancia de los patrones de diseño
 
@@ -25,15 +25,15 @@ El patrón DAO contribuye con la separación de responsabilidades, pues este pat
  
 ### singleton
 
-El patrón singleton nos asegura tener una única intancia de la clase, pues está diseñado para restringir la creación de objetos pertenecientes a una clase o el valor de un tipo a un único objeto. 
- Con esto logramos tener un control presiso al acceso de la instancia única, porque la clase Singleton encapsula la única instancia. Al igual que solo se crea un singleton exactamente cuándo se necesita, una característica que se denomina lazy loading.
+El patrón singleton nos asegura tener una única instancia de la clase, pues está diseñado para restringir la creación de objetos pertenecientes a una clase o el valor de un tipo a un único objeto. 
+ Con esto logramos tener un control presiso al acceso de la instancia única, debido a que la clase con el patrón Singleton encapsula la única instancia. Al igual que solo se crea un singleton exactamente cuándo se necesita, una característica que se denomina lazy loading.
  
 ### Decorator
 
-La utilidad principal del patrón Decorator es la de dotar de funcionalidades dinámicamente a objetos mediante composición. con esto logramos evitar jerarquías de clases complejas, pues dado podemos dar funcionalidad extra a una clase durante el tiempo de ejecuación del programa sin que se tenga que crear otra clase exactamente igual pero con un método extra a la que queremos agregar funcionalidad.
- Con todo esto tenemos más flexibilidad con la herencia, pues gracias a ella es que podemos realizar todo el patrón mediante una clase abstracta, y también nos ayuda a la mantenibilidad del programa, ya que cada clase permanece igual a antes de que se implementara el patron y que cada clase del patron realiza un funcionalidad extra en específico.
+La utilidad principal del patrón Decorator es la de dotar de funcionalidades dinámicamente a objetos mediante composición. con esto logramos evitar jerarquías de clases complejas, dado a que podemos dar funcionalidad extra a una clase durante el tiempo de ejecuación del programa sin que se tenga que crear otra clase exactamente igual pero con un método extra a la que queremos agregar funcionalidad, o tener que modificar a la clase CuentaAhorro.
+ Con todo esto tenemos más flexibilidad con la herencia, pues gracias a ella es que podemos realizar todo el patrón mediante una clase abstracta, y también nos ayuda a la mantenibilidad del programa, ya que cada clase permanece igual a antes de que se implementara el patron, y que cada clase del patron realiza un funcionalidad extra en específico teniendo un código mas entendible.
  
-Por ejemplo, en el caso de una cuenta Ahorro, teniendo su implementación antes de usar el patrón decorator solo tendriamos su clase que representa a la cuenta ahorro y su interfaz, teniendo lo siguiente: 
+Por ejemplo, en el caso de una cuenta Ahorro, teniendo su implementación antes de usar el patrón decorator solo tendríamos su clase que representa a la cuenta ahorro y su interfaz, teniendo lo siguiente: 
 
  ```java
  //Clase interfaz
@@ -188,7 +188,7 @@ Por lo contrario, con el patrón decorator nos ayuda a evitar todos esos inconve
      }
 ```
    
-Un ejemplo a la hora de crear una cuenta ahorro podria ser la siguiente: 
+Un ejemplo a la hora de crear una cuenta ahorro con un decorador podría ser la siguiente: 
 
  ```java
  public class Main {
