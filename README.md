@@ -94,6 +94,7 @@ Por ejemplo, en el caso de una cuenta Ahorro, teniendo su implementación antes 
      }
 
  }
+```
 
 Y si queremos que aparte, nuestra cuenta ahorro tenga la funcionalidad de que en su retiro, se realice un envio a su gmail de que se realizó un retiro, entonces tendriamos que crear una cuenta exactamente igual, pero además de que cuando realice el retiro agregue esa funcionalidad.
  Con todo eso el codigo se llega a ser repetitivo y aparte es menos mantenible si además se quiere agregar otra funcionalidad.
@@ -185,10 +186,11 @@ Por lo contrario, con el patrón decorator nos ayuda a evitar todos esos inconve
              e.printStackTrace();
          }
      }
-
+```
    
 Un ejemplo a la hora de crear una cuenta ahorro podria ser la siguiente: 
 
+ ```java
  public class Main {
      public static void main(String[] args) throws Exception {
 
@@ -198,5 +200,5 @@ Un ejemplo a la hora de crear una cuenta ahorro podria ser la siguiente:
 
      }
  }
-
+```
 Con esto agregamos al momento de querer realizar un retiro de nuestra cuenta ahorro la funcionalidad de enviar un email a nuestra cliente, sin tener que modificar la clase CuentaAhorro, mediante la herencia, y con el patron decorator logramos un código más entendible y que puede ser mantenible con más facilidad.
