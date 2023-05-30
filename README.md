@@ -35,168 +35,168 @@ La utilidad principal del patrón Decorator es la de dotar de funcionalidades di
  
 Por ejemplo, en el caso de una cuenta Ahorro, teniendo su implementación antes de usar el patrón decorator solo tendriamos su clase que representa a la cuenta ahorro y su interfaz, teniendo lo siguiente: 
 
-```java
-//Clase interfaz
-public interface CuentaBancaria {
-    void retirar(int saldo);
-    void agregarSaldo(int saldo);
-    String getNumeroCuenta();
-    String getBalance();
-    String getIdCliente();
-    void setBalance(String balance);
-}
+ ```java
+ //Clase interfaz
+ public interface CuentaBancaria {
+     void retirar(int saldo);
+     void agregarSaldo(int saldo);
+     String getNumeroCuenta();
+     String getBalance();
+     String getIdCliente();
+     void setBalance(String balance);
+ }
 
-//Clase cuenta Ahorro
-public class CuentaAhorro implements CuentaBancaria{
-    private String IdCuenta;
-    private String balance;
-    private String idCliente;
+ //Clase cuenta Ahorro
+ public class CuentaAhorro implements CuentaBancaria{
+     private String IdCuenta;
+     private String balance;
+     private String idCliente;
 
-    public CuentaAhorro(String idCliente, String IdCuenta, String balance){
-        this.IdCuenta = IdCuenta;
-        this.balance = balance;
-        this.idCliente = idCliente;
-    }
+     public CuentaAhorro(String idCliente, String IdCuenta, String balance){
+         this.IdCuenta = IdCuenta;
+         this.balance = balance;
+         this.idCliente = idCliente;
+     }
 
-    @Override
-    public String getIdCliente() {
-        return this.idCliente;
-    }
+     @Override
+     public String getIdCliente() {
+         return this.idCliente;
+     }
 
-    public void setIdCliente(String id){
-        this.idCliente = id;
-    }
+     public void setIdCliente(String id){
+         this.idCliente = id;
+     }
 
-    @Override
-    public void retirar(int saldo) {
-        String.valueOf(Double.parseDouble(this.balance) -  saldo);
-        
-    }
+     @Override
+     public void retirar(int saldo) {
+         String.valueOf(Double.parseDouble(this.balance) -  saldo);
 
-    @Override
-    public void agregarSaldo(int saldo) {
-        String.valueOf(Double.parseDouble(this.balance ) + saldo);
-    }
+     }
 
-    @Override
-    public String getNumeroCuenta() {
-        return this.IdCuenta;
-    }
+     @Override
+     public void agregarSaldo(int saldo) {
+         String.valueOf(Double.parseDouble(this.balance ) + saldo);
+     }
 
-    @Override
-    public String getBalance() {
-        return this.balance;
-    }
+     @Override
+     public String getNumeroCuenta() {
+         return this.IdCuenta;
+     }
 
-    @Override
-    public void setBalance(String balance) {
-        this.balance = balance;
-    }
+     @Override
+     public String getBalance() {
+         return this.balance;
+     }
 
-}
+     @Override
+     public void setBalance(String balance) {
+         this.balance = balance;
+     }
+
+ }
 
 Y si queremos que aparte, nuestra cuenta ahorro tenga la funcionalidad de que en su retiro, se realice un envio a su gmail de que se realizó un retiro, entonces tendriamos que crear una cuenta exactamente igual, pero además de que cuando realice el retiro agregue esa funcionalidad.
  Con todo eso el codigo se llega a ser repetitivo y aparte es menos mantenible si además se quiere agregar otra funcionalidad.
  
 Por lo contrario, con el patrón decorator nos ayuda a evitar todos esos inconvenientes, ya que con la herencia podemos agregar esa funcionalidad, sin necesidad de modificar a nuestra clase ahorro y sin tener que repetir código, solo con la implementacion de una clase abstracta que implemente esa interfaz, y crear clases que hereden de la clase abstracta e implementen esa funcionalidad que queremos agregar en un futuro 
 
-```java
-//Clase abstracta
-public abstract class CuentaDecorador implements CuentaBancaria{
-    protected CuentaBancaria cuentaDecorada;
+ ```java
+ //Clase abstracta
+ public abstract class CuentaDecorador implements CuentaBancaria{
+     protected CuentaBancaria cuentaDecorada;
 
-    public CuentaDecorador (CuentaBancaria cuentaDecorada){
-        this.cuentaDecorada = cuentaDecorada;
-    }
+     public CuentaDecorador (CuentaBancaria cuentaDecorada){
+         this.cuentaDecorada = cuentaDecorada;
+     }
 
-    @Override
-    public void retirar(int saldo){
-        this.cuentaDecorada.retirar(saldo);
-    }
-}
+     @Override
+     public void retirar(int saldo){
+         this.cuentaDecorada.retirar(saldo);
+     }
+ }
 
-//Clase InfRetiroDEcorador
-public class InfRetiroDEcorador extends CuentaDecorador{
+ //Clase InfRetiroDEcorador
+ public class InfRetiroDEcorador extends CuentaDecorador{
 
-    private static String emailFrom = "erickarzat11@gmail.com";
-    private static String passwordFrom = "xysiqzysunvsflgj";
-    private String emailTo;
-    private String subject;
-    private String content;
+     private static String emailFrom = "erickarzat11@gmail.com";
+     private static String passwordFrom = "xysiqzysunvsflgj";
+     private String emailTo;
+     private String subject;
+     private String content;
 
-    private Properties properties = new Properties();
-    private Session session; 
-    private MimeMessage correo;
-    
+     private Properties properties = new Properties();
+     private Session session; 
+     private MimeMessage correo;
 
-    public InfRetiroDEcorador(CuentaBancaria cuentaDecorada) {
-        super(cuentaDecorada);
-    }
 
-    @Override
-    public void retirar(int saldo) {
-        System.out.println("creando email");
-        this.cuentaDecorada.retirar(saldo);
-        createEmail();
-        sendEmail();
-    }
+     public InfRetiroDEcorador(CuentaBancaria cuentaDecorada) {
+         super(cuentaDecorada);
+     }
 
-    //Este metodo nos crea el email avisando a la persona
-    private void createEmail(){
-        emailTo = "ericktorres1118@gmail.com";
-        subject = "Informacion de su cuenta ahorro";
-        content = "";
+     @Override
+     public void retirar(int saldo) {
+         System.out.println("creando email");
+         this.cuentaDecorada.retirar(saldo);
+         createEmail();
+         sendEmail();
+     }
 
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        properties.setProperty("mail.smtp.starttls.enable", "true");
-        properties.setProperty("mail.smtp.port", "587");
-        properties.setProperty("mail.smtp.user", emailFrom);
-        properties.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
-        properties.setProperty("mail.smtp.auth", "true");
+     //Este metodo nos crea el email avisando a la persona
+     private void createEmail(){
+         emailTo = "ericktorres1118@gmail.com";
+         subject = "Informacion de su cuenta ahorro";
+         content = "";
 
-        session = Session.getDefaultInstance(properties);
+         properties.put("mail.smtp.host", "smtp.gmail.com");
+         properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+         properties.setProperty("mail.smtp.starttls.enable", "true");
+         properties.setProperty("mail.smtp.port", "587");
+         properties.setProperty("mail.smtp.user", emailFrom);
+         properties.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+         properties.setProperty("mail.smtp.auth", "true");
 
-        
-        try {
-            
-            correo = new MimeMessage(session);
-            correo.setFrom(new InternetAddress(emailFrom));
-            correo.setRecipient(Message.RecipientType.TO, new InternetAddress(emailTo));
-            correo.setSubject(subject);
-            correo.setText(content, "ISO-8859-1", "html");
-            
-        } catch (MessagingException e) {
+         session = Session.getDefaultInstance(properties);
 
-        }
-    }
 
-    //Este metodo envia el email avisando a la persona
-    public void sendEmail(){
-        try {
-            Transport transport = session.getTransport("smtp");
-            transport.connect(emailFrom, passwordFrom);
-            transport.sendMessage(correo, correo.getRecipients(Message.RecipientType.TO));
-            transport.close();
-            System.out.println("correo enviado");
-        } catch (NoSuchProviderException e) {
-            e.printStackTrace();
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-    }
-   
+         try {
+
+             correo = new MimeMessage(session);
+             correo.setFrom(new InternetAddress(emailFrom));
+             correo.setRecipient(Message.RecipientType.TO, new InternetAddress(emailTo));
+             correo.setSubject(subject);
+             correo.setText(content, "ISO-8859-1", "html");
+
+         } catch (MessagingException e) {
+
+         }
+     }
+
+     //Este metodo envia el email avisando a la persona
+     public void sendEmail(){
+         try {
+             Transport transport = session.getTransport("smtp");
+             transport.connect(emailFrom, passwordFrom);
+             transport.sendMessage(correo, correo.getRecipients(Message.RecipientType.TO));
+             transport.close();
+             System.out.println("correo enviado");
+         } catch (NoSuchProviderException e) {
+             e.printStackTrace();
+         } catch (MessagingException e) {
+             e.printStackTrace();
+         }
+     }
+
    
 Un ejemplo a la hora de crear una cuenta ahorro podria ser la siguiente: 
 
-public class Main {
-    public static void main(String[] args) throws Exception {
-             
-        CuentaBancaria cuenta = new InfRetiroDEcorador(new CuentaAhorro());
+ public class Main {
+     public static void main(String[] args) throws Exception {
 
-        cuenta.retirar(1000);
-        
-    }
-}
+         CuentaBancaria cuenta = new InfRetiroDEcorador(new CuentaAhorro());
+
+         cuenta.retirar(1000);
+
+     }
+ }
 
 Con esto agregamos al momento de querer realizar un retiro de nuestra cuenta ahorro la funcionalidad de enviar un email a nuestra cliente, sin tener que modificar la clase CuentaAhorro, mediante la herencia, y con el patron decorator logramos un código más entendible y que puede ser mantenible con más facilidad.
